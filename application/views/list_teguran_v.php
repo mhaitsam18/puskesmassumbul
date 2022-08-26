@@ -46,9 +46,11 @@
                                 <td><?= $p->balasan ?></td>
                                 <td><?= $p->created_at ?></td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#balasModal<?= $p->id_teguran ?>">
-                                        Balas
-                                    </button>
+                                    <?php if (!$p->deleted_at) : ?>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#balasModal<?= $p->id_teguran ?>">Balas </button>
+                                    <?php else : ?>
+                                        <span>ditutup</span>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach ?>

@@ -16,7 +16,7 @@ class Teguran extends CI_Controller
 
         $data['content']     = 'server/t_teguran.php';
         $this->db->join('tb_dokter', 'tb_dokter.d_id=tb_teguran.d_id');
-        $this->db->where('deleted_at', null);
+        // $this->db->where('deleted_at', null);
         $data['teguran']   = $this->db->get('tb_teguran')->result();
 
         $this->load->view('server/template_v', $data, FALSE);

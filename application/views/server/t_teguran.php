@@ -33,8 +33,12 @@
                                             <td><?= $t->teguran ?></td>
                                             <td><?= $t->balasan ?></td>
                                             <td><?= $t->created_at ?></td>
-                                            <td>
-                                                <a href="<?= base_url('server/teguran/tutup/' . $t->id_teguran) ?>" class="btn btn-secondary">Tutup</a>
+                                            <td class="text-center">
+                                                <?php if ($t->deleted_at) : ?>
+                                                    <span>ditutup</span>
+                                                <?php else : ?>
+                                                    <a href="<?= base_url('server/teguran/tutup/' . $t->id_teguran) ?>" class="btn btn-secondary">Tutup</a>
+                                                <?php endif; ?>
                                             </td>
                                         </tr>
                                 <?php endforeach;

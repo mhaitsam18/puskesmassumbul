@@ -402,7 +402,7 @@ class Dokter extends CI_Controller
 
         $where = [
             'd_id' => $this->session->userdata('idlogin'),
-            'deleted_at' => null,
+            // 'deleted_at' => null,
         ];
 
         $data['teguran'] = $this->db->get_where('tb_teguran', $where)->result();
