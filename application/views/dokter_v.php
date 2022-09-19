@@ -34,7 +34,6 @@
 
 
             <?php
-            $id_user = $this->session->userdata('is_pasien');
             $no = 1;
             ?>
             <?php foreach ($dokter as $rs) : ?>
@@ -46,8 +45,10 @@
                                 <br>
                                 <span style="margin-left:20px;"><?= $rs['poli_nama'] ?></span>
                             </div>
-                            <div class="col-md-6"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajukanPertemuanModal<?= $rs['d_id'] ?>">Ajukan Pertemuan</button>
-                            </div>
+                            <?php if ($this->session->userdata('is_pasien')) : ?>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ajukanPertemuanModal<?= $rs['d_id'] ?>">Ajukan Pertemuan</button>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

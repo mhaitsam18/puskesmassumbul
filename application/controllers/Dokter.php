@@ -129,10 +129,29 @@ class Dokter extends CI_Controller
 
     public function janji_temu()
     {
+        $id_user = $this->session->userdata('idlogin');
         $data['janji'] = $this->Dokter_m->get_janji_temu();
-
-        $data['content'] = 'dokter_janji_v';
+        $data['peralihan'] = $this->Dokter_m->get_janji_temu_peralihan();
+        $data['data_dokter'] = $this->db->get_where('tb_dokter', ['d_id !=' => $id_user])->result();
+        if ($this->session->userdata('is_dokter')) {
+            $data['content'] = 'dokter_janji_v';
+        } else {
+            $data['content'] = 'dokter_janji_member';
+        }
         $this->load->view('template_v', $data);
+    }
+
+    public function alihkan_janji()
+    {
+        $id_janji_temu = $this->input->post('id_janji_temu');
+        $d_id_asal = $this->session->userdata('idlogin');
+        $d_id = $this->input->post('d_id');
+        $this->db->where('id_janji_temu',  $id_janji_temu);
+        $this->db->update('tb_janji_temu',  [
+            'd_id_asal' => $d_id_asal,
+            'd_id' => $d_id,
+            'status_pengajuan' => 1,
+        ]);
     }
 
     public function kelola_janji($stat, $id_janji)

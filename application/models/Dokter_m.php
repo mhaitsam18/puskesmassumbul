@@ -61,8 +61,27 @@ class Dokter_m extends CI_Model
         $this->db->select('*');
         $this->db->from('tb_janji_temu a');
         $this->db->join('tb_member b', 'a.id_pasien = b.r_id');
+        $this->db->join('tb_dokter d', 'a.d_id = d.d_id');
         if ($this->session->userdata('jenis') == 'D') {
             $this->db->where('a.d_id', $id_user);
+        } else {
+            $this->db->where('a.id_pasien', $id_user);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    public function get_janji_temu_peralihan()
+    {
+        $id_user = $this->session->userdata('idlogin');
+
+        $this->db->select('*');
+        $this->db->from('tb_janji_temu a');
+        $this->db->join('tb_member b', 'a.id_pasien = b.r_id');
+        $this->db->join('tb_dokter d', 'a.d_id = d.d_id');
+        if ($this->session->userdata('jenis') == 'D') {
+            $this->db->where('a.d_id_asal', $id_user);
         } else {
             $this->db->where('a.id_pasien', $id_user);
         }
