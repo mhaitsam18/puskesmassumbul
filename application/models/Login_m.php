@@ -43,7 +43,7 @@ class Login_m extends CI_Model
     {
         $data = array(
             'r_last_login' => date('Y-m-d H:i:s'),
-            'is_online' => 1
+            'is_online' => 0
         );
         $this->db->where($idkey, $id_users);
         $this->db->update($tbl, $data);
