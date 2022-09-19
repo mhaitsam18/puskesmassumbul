@@ -81,7 +81,7 @@
                                         <?php if ($p->status_pengajuan == 0) : ?>
                                             <a href="<?= base_url('dokter/kelola_janji/1/' . $p->id_janji_temu) ?>" class="btn btn-primary">Terima janji</a>
                                             <!-- <a href="<?= base_url('dokter/kelola_janji/2/' . $p->id_janji_temu) ?>" class="btn btn-danger">Tolak janji</a> -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#janjiTemuModal<?= $p->id_janji_temu ?>">Ajukan Pertemuan</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#janjiTemuModal<?= $p->id_janji_temu ?>">Alihkan Janji Temu</button>
                                         <?php endif ?>
                                     </td>
                                 <?php endif; ?>
