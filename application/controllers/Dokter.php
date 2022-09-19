@@ -103,16 +103,20 @@ class Dokter extends CI_Controller
         $this->load->view('template_v', $data);
     }
 
-    public function ajukan_temu($d_id)
+    public function ajukan_temu()
     {
 
         $id_user = $this->session->userdata('idlogin');
 
         // var_dump($id_user);die();
-
+        $d_id = $this->input->post('d_id');
+        $tanggal = $this->input->post('tanggal');
+        $waktu = $this->input->post('waktu');
         $data = [
             'id_pasien' => $id_user,
             'd_id' => $d_id,
+            'tanggal' => $tanggal,
+            'waktu' => $waktu,
 
         ];
 
