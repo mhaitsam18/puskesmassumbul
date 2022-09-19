@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2022 at 05:59 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.12
+-- Generation Time: Sep 19, 2022 at 06:02 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -41,6 +41,7 @@ CREATE TABLE `tb_dokter` (
   `permalink` varchar(255) DEFAULT NULL,
   `d_status` enum('ACTIVE','NOT ACTIVE') DEFAULT NULL,
   `r_last_login` datetime DEFAULT NULL,
+  `is_online` tinyint(1) DEFAULT 0,
   `created_on` datetime DEFAULT NULL,
   `created_by` varchar(25) DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
@@ -51,10 +52,10 @@ CREATE TABLE `tb_dokter` (
 -- Dumping data for table `tb_dokter`
 --
 
-INSERT INTO `tb_dokter` (`d_id`, `d_mail`, `d_pass`, `d_fullname`, `d_bday`, `d_gender`, `d_image`, `d_poli`, `d_moto`, `d_phone`, `permalink`, `d_status`, `r_last_login`, `created_on`, `created_by`, `modified_on`, `modified_by`) VALUES
-(8, 'indah@gmail.com', 'ba248c985ace94863880921d8900c53f', 'dr.Indah Afermi Purba Sp.KG', '2020-01-01', 'LAKI - LAKI', '15789443991.jpg', 'P02', 'Melayani sepenuh hati, bekerja dengan hati nurani', '232323', 'drindah-afermi-purba', 'ACTIVE', '2022-08-22 05:55:55', '2019-12-10 03:27:47', 'root', '2022-07-20 06:51:53', 'DR.Indah Afermi Purba'),
-(9, 'lois@123.com', 'ba248c985ace94863880921d8900c53f', 'dr.Lois Oberlin Sihombing Sp.OG', '1972-05-07', 'LAKI - LAKI', NULL, 'P03', 'Melayani sepenuh hati, bekerja dengan hati nurani', '081244336709', 'drlois-oberlin-sihombing', 'ACTIVE', '2020-01-13 21:30:02', '2019-12-10 03:27:47', 'root', '2022-07-19 04:43:31', 'root'),
-(10, 'hotmaida@gmail.com', 'ba248c985ace94863880921d8900c53f', 'dr.Hotmaida Manullang Sp.A', '1972-07-12', 'PEREMPUAN', '1658197180dr_hotmaida.jpeg', 'P04', 'Melayani sepenuh hati, bekerja dengan hati nurani', '082397015697', 'drhotmaida-manullang', 'ACTIVE', '2022-07-19 04:21:07', '2019-12-10 03:27:47', 'root', '2022-07-19 04:19:40', 'root');
+INSERT INTO `tb_dokter` (`d_id`, `d_mail`, `d_pass`, `d_fullname`, `d_bday`, `d_gender`, `d_image`, `d_poli`, `d_moto`, `d_phone`, `permalink`, `d_status`, `r_last_login`, `is_online`, `created_on`, `created_by`, `modified_on`, `modified_by`) VALUES
+(8, 'indah@gmail.com', 'ba248c985ace94863880921d8900c53f', 'dr.Indah Afermi Purba Sp.KG', '2020-01-01', 'LAKI - LAKI', '15789443991.jpg', 'P02', 'Melayani sepenuh hati, bekerja dengan hati nurani', '232323', 'drindah-afermi-purba', 'ACTIVE', '2022-09-19 05:54:39', 1, '2019-12-10 03:27:47', 'root', '2022-07-20 06:51:53', 'DR.Indah Afermi Purba'),
+(9, 'lois@123.com', 'ba248c985ace94863880921d8900c53f', 'dr.Lois Oberlin Sihombing Sp.OG', '1972-05-07', 'LAKI - LAKI', NULL, 'P03', 'Melayani sepenuh hati, bekerja dengan hati nurani', '081244336709', 'drlois-oberlin-sihombing', 'ACTIVE', '2020-01-13 21:30:02', 0, '2019-12-10 03:27:47', 'root', '2022-07-19 04:43:31', 'root'),
+(10, 'hotmaida@gmail.com', 'ba248c985ace94863880921d8900c53f', 'dr.Hotmaida Manullang Sp.A', '1972-07-12', 'PEREMPUAN', '1658197180dr_hotmaida.jpeg', 'P04', 'Melayani sepenuh hati, bekerja dengan hati nurani', '082397015697', 'drhotmaida-manullang', 'ACTIVE', '2022-07-19 04:21:07', 1, '2019-12-10 03:27:47', 'root', '2022-07-19 04:19:40', 'root');
 
 -- --------------------------------------------------------
 
@@ -166,20 +167,26 @@ CREATE TABLE `tb_janji_temu` (
   `id_pasien` int(11) NOT NULL,
   `d_id` int(11) NOT NULL,
   `status_pengajuan` int(11) NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT current_timestamp()
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `tanggal` date DEFAULT NULL,
+  `waktu` time DEFAULT NULL,
+  `d_id_asal` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `tb_janji_temu`
 --
 
-INSERT INTO `tb_janji_temu` (`id_janji_temu`, `id_pasien`, `d_id`, `status_pengajuan`, `created_at`) VALUES
-(4, 19, 8, 1, '2022-08-03 08:14:10'),
-(5, 19, 10, 0, '2022-08-03 08:14:10'),
-(6, 19, 10, 0, '2022-08-03 08:14:10'),
-(7, 19, 10, 0, '2022-08-03 08:14:10'),
-(8, 19, 10, 0, '2022-08-03 08:14:10'),
-(9, 19, 8, 0, '2022-08-04 18:07:55');
+INSERT INTO `tb_janji_temu` (`id_janji_temu`, `id_pasien`, `d_id`, `status_pengajuan`, `created_at`, `tanggal`, `waktu`, `d_id_asal`) VALUES
+(4, 19, 8, 1, '2022-08-03 08:14:10', NULL, NULL, NULL),
+(5, 19, 10, 0, '2022-08-03 08:14:10', NULL, NULL, NULL),
+(6, 19, 10, 0, '2022-08-03 08:14:10', NULL, NULL, NULL),
+(7, 19, 10, 0, '2022-08-03 08:14:10', NULL, NULL, NULL),
+(8, 19, 10, 0, '2022-08-03 08:14:10', NULL, NULL, NULL),
+(9, 19, 8, 1, '2022-08-04 18:07:55', NULL, NULL, NULL),
+(10, 20, 10, 0, '2022-09-18 17:37:45', NULL, NULL, NULL),
+(11, 8, 8, 1, '2022-09-19 02:10:52', '2022-09-20', '09:10:00', 10),
+(12, 8, 10, 1, '2022-09-19 02:50:52', '2022-09-20', '09:50:00', 8);
 
 -- --------------------------------------------------------
 
@@ -352,20 +359,21 @@ CREATE TABLE `tb_member` (
   `created_on` datetime DEFAULT NULL,
   `created_by` varchar(25) DEFAULT NULL,
   `modified_on` datetime DEFAULT NULL,
-  `modified_by` varchar(25) DEFAULT NULL
+  `modified_by` varchar(25) DEFAULT NULL,
+  `is_online` tinyint(1) DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_member`
 --
 
-INSERT INTO `tb_member` (`r_id`, `r_mail`, `r_pass`, `r_fullname`, `r_bday`, `r_gender`, `r_image`, `r_validate`, `r_status`, `r_last_login`, `created_on`, `created_by`, `modified_on`, `modified_by`) VALUES
-(8, 'member1@gmail.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Member1', '2020-01-01', 'LAKI - LAKI', '15788260414.jpg', 'Y', 'ACTIVE', '2020-01-17 04:50:14', '2019-12-10 03:27:47', 'root', '2020-01-13 09:53:53', 'Member1'),
-(13, 'member2111@gmail.com', '202cb962ac59075b964b07152d234b70', 'asas', '2020-01-10', 'PEREMPUAN', '1659583554hd-wallpaper-susanoo-sasuke-kyuubi-naruto-1920x1080.jpg', 'N', 'ACTIVE', NULL, '2020-01-08 06:26:06', 'asas', '2022-08-04 05:25:54', 'root'),
-(14, 'member121212@gmail.com', '', 'asasd', '2020-01-14', 'PEREMPUAN', '1659583811hd-wallpaper-susanoo-sasuke-kyuubi-naruto-1920x1080.jpg', 'N', 'NOT ACTIVE', NULL, '2020-01-08 06:26:56', 'asasd', '2022-08-04 05:30:11', 'root'),
-(19, 'Oges@gmail.com', '202cb962ac59075b964b07152d234b70', 'Grace Ogestin Pasaribu', '2001-08-22', 'PEREMPUAN', '1658197973oges.jpeg', 'Y', 'ACTIVE', '2022-08-04 20:07:32', '2022-04-20 07:40:29', 'pasien', '2022-08-02 04:27:12', 'root'),
-(20, 'sofia@gmail.com', 'f1c1592588411002af340cbaedd6fc33', 'Sofia Margaretha', '2001-05-04', 'PEREMPUAN', '1658198527fia.jpeg', 'Y', 'ACTIVE', '2022-07-19 04:42:36', '2022-07-19 04:40:39', 'Sofia Margaretha', '2022-07-19 04:42:07', 'root'),
-(21, 'dianlestarirumabutar@gmail.com', '202cb962ac59075b964b07152d234b70', 'Dian Lestari P Rumabutar', NULL, '', NULL, 'N', 'NOT ACTIVE', NULL, '2022-07-20 05:00:51', 'Dian Lestari P Rumabutar', NULL, NULL);
+INSERT INTO `tb_member` (`r_id`, `r_mail`, `r_pass`, `r_fullname`, `r_bday`, `r_gender`, `r_image`, `r_validate`, `r_status`, `r_last_login`, `created_on`, `created_by`, `modified_on`, `modified_by`, `is_online`) VALUES
+(8, 'member1@gmail.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'Member1', '2020-01-01', 'LAKI - LAKI', '15788260414.jpg', 'Y', 'ACTIVE', '2022-09-19 05:54:53', '2019-12-10 03:27:47', 'root', '2020-01-13 09:53:53', 'Member1', 1),
+(13, 'member2111@gmail.com', '202cb962ac59075b964b07152d234b70', 'asas', '2020-01-10', 'PEREMPUAN', '1659583554hd-wallpaper-susanoo-sasuke-kyuubi-naruto-1920x1080.jpg', 'N', 'ACTIVE', NULL, '2020-01-08 06:26:06', 'asas', '2022-08-04 05:25:54', 'root', 0),
+(14, 'member121212@gmail.com', '', 'asasd', '2020-01-14', 'PEREMPUAN', '1659583811hd-wallpaper-susanoo-sasuke-kyuubi-naruto-1920x1080.jpg', 'N', 'NOT ACTIVE', NULL, '2020-01-08 06:26:56', 'asasd', '2022-08-04 05:30:11', 'root', 0),
+(19, 'Oges@gmail.com', '202cb962ac59075b964b07152d234b70', 'Grace Ogestin Pasaribu', '2001-08-22', 'PEREMPUAN', '1658197973oges.jpeg', 'Y', 'ACTIVE', '2022-08-04 20:07:32', '2022-04-20 07:40:29', 'pasien', '2022-08-02 04:27:12', 'root', 0),
+(20, 'sofia@gmail.com', 'f1c1592588411002af340cbaedd6fc33', 'Sofia Margaretha', '2001-05-04', 'PEREMPUAN', '1658198527fia.jpeg', 'Y', 'ACTIVE', '2022-09-18 19:48:22', '2022-07-19 04:40:39', 'Sofia Margaretha', '2022-07-19 04:42:07', 'root', 0),
+(21, 'dianlestarirumabutar@gmail.com', '202cb962ac59075b964b07152d234b70', 'Dian Lestari P Rumabutar', NULL, '', NULL, 'N', 'NOT ACTIVE', NULL, '2022-07-20 05:00:51', 'Dian Lestari P Rumabutar', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -817,8 +825,8 @@ CREATE TABLE `tb_teguran` (
 
 INSERT INTO `tb_teguran` (`id_teguran`, `teguran`, `d_id`, `balasan`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'asd', 8, 'Saya TIdak begitu :3', '2022-08-22 02:56:17', '2022-08-21 22:39:02', '2022-08-21 22:07:26'),
-(2, 'jangan gitu', 9, NULL, '2022-08-22 03:45:13', '2022-08-22 03:45:13', NULL),
-(3, 'jangan gitu', 8, 'AKu ga gitu :(', '2022-08-22 03:45:33', '2022-08-21 22:46:29', NULL);
+(2, 'jangan gitu', 9, NULL, '2022-08-22 03:45:13', '2022-08-22 03:45:13', '2022-08-26 02:30:55'),
+(3, 'jangan gitu', 8, 'AKu ga gitu :(', '2022-08-22 03:45:33', '2022-08-21 22:46:29', '2022-08-26 02:34:37');
 
 --
 -- Indexes for dumped tables
@@ -1024,7 +1032,7 @@ ALTER TABLE `tb_jadwal_dokter`
 -- AUTO_INCREMENT for table `tb_janji_temu`
 --
 ALTER TABLE `tb_janji_temu`
-  MODIFY `id_janji_temu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_janji_temu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tb_karir`
