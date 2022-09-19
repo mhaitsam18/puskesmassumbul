@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Konsultasi extends CI_Controller {
+class Konsultasi extends CI_Controller
+{
 
 	public function __construct()
 	{
@@ -13,7 +14,6 @@ class Konsultasi extends CI_Controller {
 		if ($maintenance->status == 0) {
 			redirect('maintenance/index');
 		}
-
 	}
 
 	function index()
@@ -33,18 +33,17 @@ class Konsultasi extends CI_Controller {
 
 		$did = $data['dokter']['d_id'];
 		$mid = $this->session->userdata('idlogin');
-
-
 		$data['listcontact'] = $this->Konsultasi_m->get_list_chat($mid);
-		$data['datachat'] = $this->Konsultasi_m->get_chat($mid,$did);
+		$data['datachat'] = $this->Konsultasi_m->get_chat($mid, $did);
 
 		$data['content']  = 'konsultasi_chat_v';
 		$this->load->view('template_v', $data, FALSE);
 	}
 
-	function hapus() {
+	function hapus()
+	{
 		$this->Konsultasi_m->delete($this->input->post('id'));
-		echo json_encode(array('SuccessMsg'=> 'Success'));
+		echo json_encode(array('SuccessMsg' => 'Success'));
 	}
 
 	function save()
@@ -59,46 +58,45 @@ class Konsultasi extends CI_Controller {
 
 		$save = $this->Konsultasi_m->save($fdata);
 
-		$datachat = $this->Konsultasi_m->get_chat($fdata['c_mid'],$fdata['c_did']);	
+		$datachat = $this->Konsultasi_m->get_chat($fdata['c_mid'], $fdata['c_did']);
 		$out = '';
-		if($datachat){
+		if ($datachat) {
 
 			$out = '';
-			foreach ($datachat as $dc){
-				if($dc['created_by'] == 'M'){
-	          		$gambar 		= $this->session->userdata('image');
-	          		$sisi_direct   	= 'right';
-	          		$float			= 'style="float: none !important;"';
-	          		$sisi_pull   	= 'right';
-	          	}else{
-	          		$gambar 		= 'dokter/'.$this->input->post('image');
-	          		$sisi_direct   	= '';
-	          		$float			= '';
-	          		$sisi_pull   	= 'left';
+			foreach ($datachat as $dc) {
+				if ($dc['created_by'] == 'M') {
+					$gambar 		= $this->session->userdata('image');
+					$sisi_direct   	= 'right';
+					$float			= 'style="float: none !important;"';
+					$sisi_pull   	= 'right';
+				} else {
+					$gambar 		= 'dokter/' . $this->input->post('image');
+					$sisi_direct   	= '';
+					$float			= '';
+					$sisi_pull   	= 'left';
+				}
 
-	          	}	
-
-	                $out .= '	<div class="direct-chat-msg '.$sisi_direct.'" '.$float.'>
-			                      <div class="direct-chat-info clearfix" style="text-align: '.$sisi_pull.';">
+				$out .= '	<div class="direct-chat-msg ' . $sisi_direct . '" ' . $float . '>
+			                      <div class="direct-chat-info clearfix" style="text-align: ' . $sisi_pull . ';">
 			                      	<span class="direct-chat-timestamp">
-			                      		'.date('d-m-Y h:i:s', strtotime($dc['created_on'])).'
+			                      		' . date('d-m-Y h:i:s', strtotime($dc['created_on'])) . '
 			                        </span>
 			                      </div>
-			                      <img class="direct-chat-img" src="'.base_url().'image/'.$gambar.'" alt="img-profile">
+			                      <img class="direct-chat-img" src="' . base_url() . 'image/' . $gambar . '" alt="img-profile">
 			                      <div class="direct-chat-text">';
-			                        if($dc['created_by'] == 'M'){
-			                          $out .= '<i class="fa fa-times" onclick="del('.$dc['c_id'].')"></i> <br>';
-			                        }
-			                    $out .= nl2br($dc['c_value']).'
+				if ($dc['created_by'] == 'M') {
+					$out .= '<i class="fa fa-times" onclick="del(' . $dc['c_id'] . ')"></i> <br>';
+				}
+				$out .= nl2br($dc['c_value']) . '
 			                        <br>
 			                      </div>
 			                    </div>';
 			}
-		}	
+		}
 
 		echo json_encode(array(
-							'content'=> $out
-			));
+			'content' => $out
+		));
 	}
 
 	function reload()
@@ -108,48 +106,46 @@ class Konsultasi extends CI_Controller {
 		$fdata['c_did']			= $this->input->post('dokter');
 		$fdata['c_mid']			= $this->session->userdata('idlogin');
 
-		$datachat = $this->Konsultasi_m->get_chat($fdata['c_mid'],$fdata['c_did']);	
+		$datachat = $this->Konsultasi_m->get_chat($fdata['c_mid'], $fdata['c_did']);
 		$out = '';
-		if($datachat){
+		if ($datachat) {
 
 			$out = '';
-			foreach ($datachat as $dc){
-				if($dc['created_by'] == 'M'){
-	          		$gambar 		= $this->session->userdata('image');
-	          		$sisi_direct   	= 'right';
-	          		$float			= 'style="float: none !important;"';
-	          		$sisi_pull   	= 'right';
-	          	}else{
-	          		$gambar 		= 'dokter/'.$this->input->post('image');
-	          		$sisi_direct   	= '';
-	          		$float			= '';
-	          		$sisi_pull   	= 'left';
+			foreach ($datachat as $dc) {
+				if ($dc['created_by'] == 'M') {
+					$gambar 		= $this->session->userdata('image');
+					$sisi_direct   	= 'right';
+					$float			= 'style="float: none !important;"';
+					$sisi_pull   	= 'right';
+				} else {
+					$gambar 		= 'dokter/' . $this->input->post('image');
+					$sisi_direct   	= '';
+					$float			= '';
+					$sisi_pull   	= 'left';
+				}
 
-	          	}	
-
-	                $out .= '	<div class="direct-chat-msg '.$sisi_direct.'" '.$float.'>
-			                      <div class="direct-chat-info clearfix" style="text-align: '.$sisi_pull.';">
+				$out .= '	<div class="direct-chat-msg ' . $sisi_direct . '" ' . $float . '>
+			                      <div class="direct-chat-info clearfix" style="text-align: ' . $sisi_pull . ';">
 			                      	<span class="direct-chat-timestamp">
-			                      		'.date('d-m-Y h:i:s', strtotime($dc['created_on'])).'
+			                      		' . date('d-m-Y h:i:s', strtotime($dc['created_on'])) . '
 			                        </span>
 			                      </div>
-			                      <img class="direct-chat-img" src="'.base_url().'image/'.$gambar.'" alt="img-profile">
+			                      <img class="direct-chat-img" src="' . base_url() . 'image/' . $gambar . '" alt="img-profile">
 			                      <div class="direct-chat-text">';
-			                        if($dc['created_by'] == 'M'){
-			                          $out .= '<i class="fa fa-times" onclick="del('.$dc['c_id'].')"></i> <br>';
-			                        }
-			                    $out .= nl2br($dc['c_value']).'
+				if ($dc['created_by'] == 'M') {
+					$out .= '<i class="fa fa-times" onclick="del(' . $dc['c_id'] . ')"></i> <br>';
+				}
+				$out .= nl2br($dc['c_value']) . '
 			                        <br>
 			                      </div>
 			                    </div>';
 			}
-		}	
+		}
 
 		echo json_encode(array(
-							'content'=> $out
-			));
+			'content' => $out
+		));
 	}
-
 }
 
 /* End of file Konsultasi.php */

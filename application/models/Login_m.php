@@ -32,7 +32,18 @@ class Login_m extends CI_Model
     function updateLastLogin($tbl, $idkey, $id_users)
     {
         $data = array(
-            'r_last_login' => date('Y-m-d H:i:s')
+            'r_last_login' => date('Y-m-d H:i:s'),
+            'is_online' => 1
+        );
+        $this->db->where($idkey, $id_users);
+        $this->db->update($tbl, $data);
+    }
+
+    function updatelogout($tbl, $idkey, $id_users)
+    {
+        $data = array(
+            'r_last_login' => date('Y-m-d H:i:s'),
+            'is_online' => 1
         );
         $this->db->where($idkey, $id_users);
         $this->db->update($tbl, $data);

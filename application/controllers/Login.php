@@ -101,6 +101,7 @@ class Login extends CI_Controller
 
                         $this->Login_m->updateLastLogin('tb_member', 'r_id', $user['r_id']);
 
+
                         redirect(base_url() . 'myprofile');
                     } else {
                         $this->session->set_flashdata('error', 'Akun anda belum aktif, silahkan hubungi Tim kami.');
@@ -145,7 +146,9 @@ class Login extends CI_Controller
 
     public function close()
     {
-
+        if ($this->session->is_dokter) {
+            $this->Login_m->updatelogout('tb_dokter', 'd_id', $this->session->userdata('idlogin'));
+        }
         $this->session->unset_userdata(array('fullname' => '', 'email' => '', 'image' => '', 'bday' => '', 'gender' => '', 'ip_login' => '', 'idlogin' => ''));
         $this->session->sess_destroy();
         redirect(base_url());
